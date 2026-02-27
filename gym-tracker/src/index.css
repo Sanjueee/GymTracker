@@ -1,14 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Geist+Mono:wght@100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Outfit:wght@100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
-body{
-    @apply bg-[#0a0a0a] text-white font-sans;
-}
-
 @theme {
-  --color-app-bg: #101010;
+  --color-app-bg-dark: #0a0a0a;
+  --color-app-bg-light: #FAFAFA;
   --color-card-bg: #1b1b1b;
-  --color-accent:#006CFA; 
+  --color-accent:#7dd3fc; 
   --color-border: #2d2d2d;
   --font-inter: "Inter";
   --font-outfit: "Outfit";
@@ -16,3 +13,8 @@ body{
   --font-urbanist: "urbanist";
   --font-montserrat: "montserrat"; 
 }
+
+body{
+    @apply bg-app-bg-dark text-white font-sans;
+}
+

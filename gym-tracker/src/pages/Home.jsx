@@ -1,8 +1,20 @@
-import Header from "../components/layouts/Header"
+import ExerciseRow from "../components/ExerciseRow"
+import { exerciseData } from "../data/exercises"
 
 const Home = () => {
     return (
-        <Header/>
+            <main>
+                {Object.entries(exerciseData).map(([category, exercises])=>{
+                    return (
+                        <ExerciseRow
+                            key={category}
+                            title={category}
+                            exercises={exercises}
+                        />
+                    )
+                })}
+            </main>
+        
     )
 }
 
