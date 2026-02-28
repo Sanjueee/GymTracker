@@ -4,15 +4,13 @@ import { exerciseData } from "../data/exercises"
 const Home = () => {
     return (
             <main>
-                {Object.entries(exerciseData).map(([category, exercises])=>{
-                    return (
+                {Object.entries(exerciseData).map(([category, exercises])=>(
                         <ExerciseRow
                             key={category}
                             title={category}
                             exercises={exercises}
                         />
-                    )
-                })}
+                ))}
             </main>
         
     )

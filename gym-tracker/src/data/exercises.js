@@ -1,16 +1,37 @@
+import BenchPressMan from '../assets/exerciseImages/BenchPressMan.jpg';
+
 export const exerciseData = {
   Chest: [
     {
       id: "chest-01",
       name: "Bench Press",
       muscle: "Chest",
-      image: "https://placehold.co/600x400/141414/white?text=Bench+Press",
+      // image: "../assets/exerciseImages/BenchPressMan.jpg",
+      image: BenchPressMan
     },
     {
       id: "chest-02",
       name: "Incline Dumbbell Fly",
       muscle: "Chest",
       image: "https://placehold.co/600x400/141414/white?text=Incline+Fly",
+    },
+    {
+      id: "chest-03",
+      name: "Incline Dumbbell Press",
+      muscle: "Chest",
+      image: "https://placehold.co/600x400/141414/white?text=Incline+press",
+    },
+    {
+      id: "chest-04",
+      name: "Decline Dumbell Press",
+      muscle: "Chest",
+      image: "https://placehold.co/600x400/141414/white?text=Decline+Dumbell",
+    },
+    {
+      id: "chest-05",
+      name: "Pec Deck",
+      muscle: "Chest",
+      image: "https://placehold.co/600x400/141414/white?text=Pec+Deck",
     },
   ],
   Back: [
