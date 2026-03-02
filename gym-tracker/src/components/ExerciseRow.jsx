@@ -1,7 +1,8 @@
 import ExerciseCard from "./ExerciseCard"
 import { CirclePlus } from "lucide-react"
 
-function ExerciseRow({ title, exercises }) {
+
+function ExerciseRow({ title, exercises, deleteExercise }) {
     return (
         <section className="mb-2">
             <div className="flex items-center justify-between mt-2.5 px-6 mb-1">
@@ -15,6 +16,7 @@ function ExerciseRow({ title, exercises }) {
                 <ExerciseCard 
                     key={exercise.id}
                     exercise={exercise}
+                    deleteExercise = {deleteExercise}
                 />
             ))}
                 <div className="flex flex-col justify-center items-center relative shrink-0 bg-[#131313] w-45 h-46

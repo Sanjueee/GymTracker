@@ -1,6 +1,6 @@
 import BenchPressMan from '../assets/exerciseImages/BenchPressMan.jpg';
 
-export const exerciseData = {
+export const exerciseDataObj = {
   Chest: [
     {
       id: "chest-01",
