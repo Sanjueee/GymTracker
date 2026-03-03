@@ -62,4 +62,18 @@ export const exerciseDataObj = {
       image: "https://placehold.co/600x400/141414/white?text=Leg+press",
     },
   ],
+  Shoulders: [
+    {
+      id: "shoulder-01",
+      name: "Shoulder Press",
+      muscle: "Shoulder",
+      image: "https://placehold.co/600x400/141414/white?text=Shoulder+Press",
+    },
+    {
+      id: "shoulder-02",
+      name: "Lateral Raises",
+      muscle: "Shoulder",
+      image: "https://placehold.co/600x400/141414/white?text=lateral+raises",
+    },
+  ],
 };
