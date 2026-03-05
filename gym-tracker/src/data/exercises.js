@@ -4,7 +4,7 @@ export const exerciseDataObj = {
   Chest: [
     {
       id: "chest-01",
-      name: "Bench Press",
+      name: " Barbell Bench Press",
       muscle: "Chest",
       // image: "../assets/exerciseImages/BenchPressMan.jpg",
       image: BenchPressMan

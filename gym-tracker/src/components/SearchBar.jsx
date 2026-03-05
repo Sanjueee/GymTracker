@@ -10,14 +10,15 @@ const SearchBar = () =>{
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         const fetchExercise = async () => {
 
             if (searchKey.length < 3){
                 setResult([])
+                setLoading(false)
                 return
             }
 
-            setLoading(true)
             const {error , data } = await supabase
                 .from("exercises")
                 .select("id, name")
@@ -30,7 +31,12 @@ const SearchBar = () =>{
             }
             setLoading(false)
         }
-        fetchExercise()
+
+        const timer = setTimeout(() =>{
+            fetchExercise()
+        },500)
+
+        return () => clearTimeout(timer)
     },[searchKey])
 
 
@@ -46,32 +52,32 @@ const SearchBar = () =>{
                 onChange={(e) => setSearchKey(e.target.value)}
                 />
                 {(loading || result.length > 0 || (searchKey.length >= 3 && !loading)) && (
-                    <div className="absolute top-full left-6 mt-2 w-48 bg-[#1b1b1b] border max-h-[500px] custom-scrollbar
+                    <div className="absolute top-full font-inter  left-6 mt-2 w-48 bg-[#1b1b1b] border max-h-[500px] custom-scrollbar
                      border-zinc-800 rounded-xl shadow-2xl shadow-black/50 z-[100] overflow-y-auto cursor-pointer py-1"> 
 
                     {loading && (
-                        <div className="px-4 py-3 text-sm text-zinc-500 flex items-center gap-2">
-                            <div className="w-3 h-3 border-2 border-accent border-t-transparent rounded-full animate-spin"></div>
+                        <div className="px-4 py-3 text-[14px] font-outfit text-zinc-500 flex items-center gap-3">
+                            <div className="w-6 h-6 border-2 border-accent border-t-transparent  rounded-full animate-spin"></div>
                             Searching exercise...
                         </div>
                     )}
 
                     {!loading && result.map((items)=>(
                         <button  key={items.id} 
-                                className="w-full text-left px-4 py-2.5 text-sm text-zinc-300 hover:bg-zinc-800 hover:text-white 
-                                                transition-colors border-b border-zinc-800">
+                                className="w-full text-left px-4 py-3 text-l text-zinc-300 hover:bg-zinc-800 hover:text-white 
+                                                transition-colors border-b border-zinc-800 last:border-0">
                                 {items.name }
                         </button>
                     ))}
 
                     {!loading && searchKey.length >= 3 && result.length === 0 && (
-                    <div className="px-4 py-3 text-sm text-zinc-500 italic">
+                    <div className="px-4 py-3 text-l text-zinc-500 italic">
                         No exercise found for "{searchKey}"
                     </div>
                     )}
                     </div> 
-
                 )}
+
            </div>
     )
 }
