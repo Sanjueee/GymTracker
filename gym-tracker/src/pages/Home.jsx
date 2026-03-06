@@ -3,6 +3,7 @@ import ExerciseRow from "../components/ExerciseRow"
 import { exerciseDataObj } from "../data/exercises"
 import ConfirmDelete from "../components/ConfirmDelete"
 import ToastMessage from "../components/toastMessage"
+import Header from "../components/layouts/Header"
 
 const Home = () => {
 
@@ -37,7 +38,7 @@ const Home = () => {
 
 
     return (
-            <>
+            <>  <Header/>
                 {Object.entries(exerciseData).map(([category, exercises])=>(
                         <ExerciseRow
                             key={category}

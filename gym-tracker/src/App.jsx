@@ -1,14 +1,15 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom"
 import Home from "./pages/Home"
 import Header from "./components/layouts/Header"
+import Auth from "./components/Auth"
 
 const App = () => {
   
   return (
     <BrowserRouter>
-      <Header/>
       <Routes>
         <Route  path="/" element= { <Home/>} />
+        <Route  path="/auth" element= { <Auth/>} />
       </Routes> 
     </BrowserRouter>
   )
