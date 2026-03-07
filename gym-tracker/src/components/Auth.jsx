@@ -7,7 +7,7 @@ const Auth = () => {
 
     const navigate = useNavigate()
 
-    const [isSignUp, setIsSignUp] = useState(false)
+    const [isSignUp, setIsSignUp] = useState(true)
     const [error, setError] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     
@@ -59,7 +59,7 @@ const Auth = () => {
             setIsLoading(false)
 
             if (data?.session) {
-                navigate('/', {state: {toastMsg: `Signed In as ${data.user?.user_metadata?.display_name}`}})
+                navigate('/', {state: {toastMsg: `Signed In as " ${data.user?.user_metadata?.display_name} "`}})
             }
         }
     }
