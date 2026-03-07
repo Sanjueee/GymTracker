@@ -10,8 +10,8 @@ const SearchBar = () =>{
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        setLoading(true)
         const fetchExercise = async () => {
+            setLoading(true)
 
             if (searchKey.length < 3){
                 setResult([])

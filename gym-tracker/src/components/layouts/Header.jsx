@@ -1,8 +1,18 @@
 import { CircleUserRound  } from "lucide-react"
 import SearchBar from "../SearchBar"
 import { useState } from "react"
+import { useNavigate } from "react-router-dom"
+
 
 const Header = () => {
+
+    const navigate = useNavigate()
+    const [navAuthPage, setNavAuthPage] = useState(false)
+
+    if (navAuthPage){
+        navigate("/auth")
+    }
+
     return (
         <header className="bg-app-bg-dark/95 backdrop-blur-md px-7 border-b border-[#1B1B1B] h-16
                             flex items-center justify-between sticky top-0 z-50 gap-2 sm:px-20  ">
@@ -10,9 +20,9 @@ const Header = () => {
                             GYM<span className="font-bold">LOG</span>
             </h1>
             <SearchBar/>
-           <div>
+           <button onClick={()=> setNavAuthPage(!navAuthPage) }>
                 <CircleUserRound size={25} className="cursor-pointer"/>
-           </div>
+           </button>
         </header>
 
     )

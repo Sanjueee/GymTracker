@@ -1,26 +1,38 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ExerciseRow from "../components/ExerciseRow"
 import { exerciseDataObj } from "../data/exercises"
 import ConfirmDelete from "../components/ConfirmDelete"
 import ToastMessage from "../components/toastMessage"
 import Header from "../components/layouts/Header"
+import { useLocation } from "react-router-dom"
 
 const Home = () => {
 
+    const location = useLocation()
     
     const [exerciseData, setExerciseData] = useState(exerciseDataObj)
     const [exerciseToDelete, setExerciseToDelete ] = useState(null)
     const [showDeleteToast, setShowDeleteToast] = useState(false)
+    const [showSignInToast, setShowSignInToast] = useState(false)
+    const [toastSignInMessage, setToastSignInMessage] = useState("")
 
-    
+    useEffect(() => {
+        if (location.state?.toastMsg){
+            setToastSignInMessage(location.state.toastMsg)
+            setShowSignInToast(true)
 
+            const timer = setTimeout(() => setShowSignInToast(false), 3000)
+
+            window.history.replaceState({}, document.title)
+
+            return () => clearTimeout(timer)
+        }
+    },[location])
 
     const requestDelete = (exercise, category) => {
         setExerciseToDelete({...exercise, category})
     } 
 
-
-    
     const deleteExercise = (id, category) => {
 
         const categoryToUpdate = exerciseData[category]
@@ -31,7 +43,7 @@ const Home = () => {
             [category]: updatedList
         })
         setShowDeleteToast(true)
-        setTimeout(() => setShowDeleteToast(false), 3000)
+        setTimeout(() => setShowDeleteToast(false), 15000)
         setExerciseToDelete(null)
 
     }
@@ -55,6 +67,7 @@ const Home = () => {
                     />
                 )}
                 {showDeleteToast && <ToastMessage message="Exercise Deleted !"/>}
+                {showSignInToast && <ToastMessage message={toastSignInMessage}/>}
             </>
         
     )

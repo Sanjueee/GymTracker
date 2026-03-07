@@ -50,3 +50,14 @@ body{
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #52525b; /* Tailwind zinc-600 */
 }
+
+@keyframes fade-away {
+  0% { opacity: 0; transform: translate(-50%, 20px); }
+  10% { opacity: 1; transform: translate(-50%, 0); }
+  90% { opacity: 1; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, -20px); }
+}
+
+.animate-fade-away {
+  animation: fade-away 3s forwards;
+}

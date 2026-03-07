@@ -16,7 +16,7 @@ const ExerciseCard = ({exercise, requestDelete}) => {
         <button 
             onClick={() => requestDelete(exercise, exercise.muscle)}
             className="absolute top-2 right-2 p-2 bg-black/60 backdrop-blur-md rounded-full 
-             hover:text-red-500 hover:bg-black/60 transition-all"
+             hover:text-red-500 hover:bg-black/60 transition-all cursor-pointer"
             ><Trash2 size={16} />
         </button>
         </div>
