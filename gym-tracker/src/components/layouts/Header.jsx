@@ -48,16 +48,16 @@ const Header = () => {
     return (
         <header className="bg-app-bg-dark/95 backdrop-blur-md px-7 border-b border-[#1B1B1B] h-16
                             flex items-center justify-between sticky top-0 z-50 gap-2 sm:px-20  ">
-            <h1 className="text-white text-2xl  font-montserrat font-light tracking-tighter cursor-pointer">
-                            GYM<span className="font-bold">LOG</span>
+            <h1 className="text-accent text-2xl  font-montserrat font-light tracking-tighter cursor-pointer">
+                            GYM<span className="font-bold text-zinc-100">LOG</span>
             </h1>
             <SearchBar/>
            <button onClick={()=> setNavAuthPage(!navAuthPage) }>
-                <CircleUserRound size={25} className="relative cursor-pointer"/>
+                <CircleUserRound size={25} className="relative cursor-pointer text-zinc-300"/>
            </button>
            {(navAuthPage && isSignedIn) && (
                 <div className="absolute z-100 top-13 bg-zinc-800  rounded-xl right-9">
-                        <div className="border-b-1 border-b-zinc-600 p-3 flex justify-center">
+                        <div className="border-b border-b-zinc-600 p-3 flex justify-center">
                             <p className="text-md text-zinc-300 font-outfit">Hey!<span className="ml-0.5 text-accent/80"> {username}</span></p>
                         </div>
                         <div className="boder-1 border-b-zinc-600">

@@ -3,12 +3,12 @@ import { useEffect, useState } from "react"
 import { supabase } from "../lib/supabaseClient" 
 
 
-const SearchBar = ({onSelect}) =>{
+const SearchBar = ({onSelect, searchFilterCategory}) =>{
 
     const [searchKey, setSearchKey] = useState("")
     const [result, setResult] = useState([])
     const [loading, setLoading] = useState(false)
-    const [showDropdown, setShowDropdown] = useState(false);
+    const [showDropdown, setShowDropdown] = useState(false)
 
     useEffect(() => {
         const fetchExercise = async () => {
@@ -21,17 +21,23 @@ const SearchBar = ({onSelect}) =>{
             }
             
             setLoading(true)
-            
+            setShowDropdown(true)
 
-            const {error , data } = await supabase
-                .from("exercises")
-                .select("id, name")
-                .ilike('name', `%${searchKey}%`)
-                .limit(25)
+            let query = supabase
+                    .from("exercises")
+                    .select("id, name")
+                    .ilike('name', `%${searchKey}%`)
+            
+            if (searchFilterCategory){
+                query = query.eq("category", searchFilterCategory)
+            }
+
+            const { error, data } = await query.limit(25)
+
             if (error){
                 console.log("Error fetching data.", error)
             }else{
-                setResult(data)
+                setResult(data || [])
             }
             setLoading(false)
         }

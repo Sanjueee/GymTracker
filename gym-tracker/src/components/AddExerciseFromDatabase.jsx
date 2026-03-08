@@ -3,10 +3,11 @@ import SearchBar from "./SearchBar"
 import { useState } from "react"
 import { supabase } from "../lib/supabaseClient"
 
-const AddExerciseFromDatabase = ({ onClose, userData , toast}) => {
+const AddExerciseFromDatabase = ({ onClose, userData , toast, exerciseCategory}) => {
 
-    const[selectedExercise,setSelectedExercise] = useState(null)
-    const[isLoading, setIsLoading] = useState(false)
+    const [selectedExercise,setSelectedExercise] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
+  
 
     const handleAddToLog = async() =>{
 
@@ -50,11 +51,12 @@ const AddExerciseFromDatabase = ({ onClose, userData , toast}) => {
                         Add Exercise
                     </h2>
                     <p className="text-zinc-500 text-sm">
-                        Search our database of over 1,000 movements
+                        Search our database for popular {exerciseCategory} movements
                     </p>
                 </div>
 
-                <SearchBar onSelect={(item) => setSelectedExercise(item)}/>
+                <SearchBar onSelect={(item) => setSelectedExercise(item)}
+                           searchFilterCategory={exerciseCategory}/>
                 {!isLoading ? (
                     <button onClick={handleAddToLog} className="w-full bg-accent text-black py-3 rounded-xl font-bold
                                     hover:opacity-90 transition-all flex items-center justify-center gap-2

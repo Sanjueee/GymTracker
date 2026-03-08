@@ -20,6 +20,7 @@ const Home = () => {
     const [signInMessageToast, setSignInMessageToast] = useState("")
     const [showAddExerciseToast,setAddExerciseToast] = useState(false)
     const [addExercise, setAddExercise] = useState(false)
+    const [exerciseCategory, setExerciseCategory] = useState(null)
 
     useEffect(()=>{
         try{
@@ -82,6 +83,7 @@ const Home = () => {
                             exercises={exercises}
                             requestDelete = {requestDelete}
                             setAddExercise={setAddExercise}
+                            setExerciseCategory = {setExerciseCategory}
                         />
                 ))}
                 {exerciseToDelete && (
@@ -91,7 +93,7 @@ const Home = () => {
                         onCancel = { () => setExerciseToDelete(null)}
                     />
                 )}
-                {(addExercise && user) && <AddExerciseFromDatabase toast={setAddExerciseToast} userData={user} onClose={() => setAddExercise(false)}/>}
+                {(addExercise && user) && <AddExerciseFromDatabase exerciseCategory={exerciseCategory} toast={setAddExerciseToast} userData={user} onClose={() => setAddExercise(false)}/>}
 
                 {showDeleteToast && <ToastMessage message="Exercise Deleted !"/>}
                 {showSignInToast && <ToastMessage message={signInMessageToast}/>}

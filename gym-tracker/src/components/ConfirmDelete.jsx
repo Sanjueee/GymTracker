@@ -1,7 +1,7 @@
 const ConfirmDelete = ({exercise , onDelete, onCancel}) => {
     return(
-        <div className="z-[9999] fixed inset-0 bg-black/60 backdrop-blur-sm
-                        flex justify-center items-center  "
+        <div className="z-9999 fixed inset-0 bg-black/60 backdrop-blur-sm
+                        flex justify-center items-center"
              onClick={onCancel}>                
             <div className="bg bg-zinc-900/90 border border-zinc-600 shadow-2xl w-full max-w-sm 
                             flex justify-center items-center flex-col p-7 rounded-xl "  >

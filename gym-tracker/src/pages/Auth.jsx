@@ -73,8 +73,8 @@ const Auth = () => {
                 {isSignUp ? (
                     <div className="mb-5">
                         <div className="flex justify-between  items-center mb-4">
-                            <h1 className="text-white/70 text-4xl  font-montserrat font-light tracking-tighter cursor-pointer ">
-                                                GYM<span className="font-bold">LOG</span></h1>
+                            <h1 className="text-accent/70 text-4xl  font-montserrat font-light tracking-tighter cursor-pointer ">
+                                                GYM<span className="font-bold text-zinc-100">LOG</span></h1>
                             <button onClick={handleBack} className="cursor-pointer text-white/70  ">
                                     <CircleArrowLeft size={25}/> </button>
                         </div>
@@ -84,8 +84,8 @@ const Auth = () => {
                 ) : (
                     <div className="mb-5">
                         <div className="flex justify-between  items-center mb-4">
-                            <h1 className="text-white/70 text-4xl  font-montserrat font-light tracking-tighter cursor-pointer ">
-                                                GYM<span className="font-bold">LOG</span></h1>
+                            <h1 className="text-accent/70 text-4xl  font-montserrat font-light tracking-tighter cursor-pointer ">
+                                                GYM<span className="font-bold text-zinc-100">LOG</span></h1>
                             <button onClick={handleBack} className="cursor-pointer text-white/70 mr-2">
                                     <CircleArrowLeft size={25}/> </button>
                         </div>
@@ -119,14 +119,14 @@ const Auth = () => {
                     </div>
 
                     {!isLoading ? (
-                        <button className="w-full bg-white text-black font-bold p-3 rounded-lg mt-4 hover:bg-zinc-200 transition-all"
+                        <button className="w-full  bg-blue-700 text-zinc-100 font-bold p-3 rounded-lg mt-4 hover:bg-blue-400 transition-all"
                                     onClick={handleSignup}>
-                            {isSignUp ? "Sign Up" : "Sign In"}
+                            {isSignUp ? "Create new account" : "Sign In"}
                         </button>
                     ) : (
-                        <div className="w-full bg-zinc-500 text-zinc-800 font-bold p-3 rounded-lg mt-4 
+                        <div className="w-full bg-blue-900 text-zinc-400 font-bold p-3 rounded-lg mt-8 
                                         flex items-center justify-center gap-2 cursor-not-allowed ">
-                            <div className=" border-t-transparent border-2 border-zinc-950 animate-spin w-6 h-6 rounded-full "></div>
+                            <div className=" border-t-transparent border-2 border-zinc-400 animate-spin w-6 h-6 rounded-full "></div>
                             {isSignUp ? "Creating  new account.." : "Signing In.."}
                         </div>
                     )}
@@ -145,7 +145,7 @@ const Auth = () => {
                 <div className="pt-4 border-t border-zinc-700/50 mt-7 text-center">
                     <p className=" text-center text-zinc-500 text-[18px] ">
                         {isSignUp ? "Already have an account? " : "New to GymLog? "} 
-                        <button type="button" onClick={() => (setIsSignUp(!isSignUp), setError(null))} className="text-accent underline cursor-pointer text-l">{isSignUp ? "Sign In" : "Create account"}</button>
+                        <button type="button" onClick={() => (setIsSignUp(!isSignUp), setError(null))} className="text-accent  cursor-pointer text-l">{isSignUp ? "Sign In" : "Create account"}</button>
                     </p>
                 </div>
                 
