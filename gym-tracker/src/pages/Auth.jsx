@@ -16,7 +16,6 @@ const Auth = () => {
     const [password, setPassword] = useState("")
     const [username, setUsername] = useState("")
 
-    
     const handleBack = () => {
         (window.history.length > 1)
             ? navigate(-1)

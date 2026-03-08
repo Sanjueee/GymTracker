@@ -3,21 +3,25 @@ import { useEffect, useState } from "react"
 import { supabase } from "../lib/supabaseClient" 
 
 
-const SearchBar = () =>{
+const SearchBar = ({onSelect}) =>{
 
     const [searchKey, setSearchKey] = useState("")
     const [result, setResult] = useState([])
     const [loading, setLoading] = useState(false)
+    const [showDropdown, setShowDropdown] = useState(false);
 
     useEffect(() => {
         const fetchExercise = async () => {
-            setLoading(true)
-
+            
             if (searchKey.length < 3){
                 setResult([])
                 setLoading(false)
+                setShowDropdown(false)
                 return
             }
+            
+            setLoading(true)
+            
 
             const {error , data } = await supabase
                 .from("exercises")
@@ -41,17 +45,22 @@ const SearchBar = () =>{
 
 
 
+
+
     return(
          <div className="relative flex items-center gap-1">
                 <Search size={20} className="text-zinc-500"/>
-              <input type="text" 
-                placeholder="Search exercise" 
-                className="bg-transparent w-full border border-[#262626] rounded-full py-2 pl-2
-                            outline-none focus-within:border-accent/50 focus-within:ring-1 
-                            focus-within:ring-accent/20 transition-all duration-100 sm:w-80 sm:pl-3.5"
-                onChange={(e) => setSearchKey(e.target.value)}
+                <input type="text" 
+                    value={searchKey}
+                    placeholder="Search exercise" 
+                    className="bg-transparent w-full border border-[#262626] rounded-full py-2 pl-2
+                                outline-none focus-within:border-accent/50 focus-within:ring-1 
+                                focus-within:ring-accent/20 transition-all duration-100 sm:w-80 sm:pl-3.5"
+                    onChange={(e) => {setSearchKey(e.target.value)
+                                    setShowDropdown(true)
+                    }}
                 />
-                {(loading || result.length > 0 || (searchKey.length >= 3 && !loading)) && (
+                {showDropdown && (searchKey.length >= 3) && (
                     <div className="absolute top-full font-inter  left-6 mt-2 w-48 bg-card-bg border max-h-125 custom-scrollbar
                      border-zinc-800 rounded-xl shadow-2xl shadow-black/50 z-100 overflow-y-auto cursor-pointer py-1"> 
 
@@ -64,6 +73,12 @@ const SearchBar = () =>{
 
                     {!loading && result.map((items)=>(
                         <button  key={items.id} 
+                                onClick={() => {
+                                    onSelect(items)
+                                    setResult([])
+                                    setShowDropdown(false)
+                                    setSearchKey(items.name)
+                                }}
                                 className="w-full text-left px-4 py-3 text-l text-zinc-300 hover:bg-zinc-800 hover:text-white 
                                                 transition-colors border-b border-zinc-800 last:border-0">
                                 {items.name }

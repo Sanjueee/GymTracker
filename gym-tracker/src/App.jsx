@@ -1,7 +1,7 @@
 import { Routes, Route, BrowserRouter } from "react-router-dom"
 import Home from "./pages/Home"
 import Header from "./components/layouts/Header"
-import Auth from "./components/Auth"
+import Auth from "./pages/Auth"
 
 const App = () => {
   
