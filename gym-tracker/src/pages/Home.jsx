@@ -13,7 +13,7 @@ const Home = () => {
     const location = useLocation()
     
     const [user,setUser] = useState(null)
-    const [exerciseData, setExerciseData] = useState(exerciseDataObj)
+    const [exerciseData, setExerciseData] = useState({})
     const [exerciseToDelete, setExerciseToDelete ] = useState(null)
     const [showDeleteToast, setShowDeleteToast] = useState(false)
     const [showSignInToast, setShowSignInToast] = useState(false)
@@ -40,6 +40,50 @@ const Home = () => {
         }
 
     },[])
+
+    useEffect(() =>{
+
+        if (!user) return
+        
+        const getExerciseData = async () => {
+            const { error, data } = await supabase
+                .from("user_exercises")
+                .select(`
+                    id, 
+                    exercise_id, 
+                    exercises (
+                        name, 
+                        image_urls, 
+                        category,
+                        main_muscle
+                    )
+                `)
+                .eq("user_id", user.id)
+
+            if (error) {
+                console.error("Query Error:", error.message)
+                return
+            }
+
+
+            const grouped = data.reduce((acc, item) => {
+                const category = item.exercises?.category || "Other"
+                if (!acc[category]) acc[category] = []
+                
+                acc[category].push({
+                    id: item.id,
+                    exercise_id: item.exercise_id,
+                    name: item.exercises?.name,
+                    muscle: item.exercises?.main_muscle,
+                    image: item.exercises?.image_urls?.[0]
+                });
+                return acc;
+            }, {});
+            console.log(grouped)
+            setExerciseData(grouped)
+        }
+        getExerciseData()
+    },[user])
 
     useEffect(() => {
         if (location.state?.toastMsg){

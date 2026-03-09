@@ -5,13 +5,14 @@ const ExerciseCard = ({exercise, requestDelete}) => {
 
     return (
         <div className="relative shrink-0 bg-[#131313] w-45 h-40 
-                        border border-zinc-800 rounded-2xl hover:border-accent/50 ">
+                        border border-zinc-800 rounded-2xl rounded-b-none hover:border-accent/50 ">
                 <img 
                     src={exercise.image}
                     alt={exercise.name}
                     className=" w-full h-full rounded-t-xl object-cover "
                 />
-        <div className=" bg-zinc-800 text-zinc-100 text-center text-inter text-[17.5px] 
+                
+        <div className=" w-45 h-13 bg-zinc-800 text-zinc-100 flex items-center justify-center text-center text-inter text-[17.5px] 
                         tracking-tighter rounded-b-xl ">{exercise.name}</div>
         <button 
             onClick={() => requestDelete(exercise, exercise.muscle)}
