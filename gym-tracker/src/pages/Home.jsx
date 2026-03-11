@@ -59,7 +59,7 @@ const Home = () => {
                             main_muscle
                         )
                 `)
-                .eq("user_id", user.id)
+                .eq("user_id", user.id)     
 
             if (error) {
                 console.error("Query Error:", error.message)
@@ -98,19 +98,32 @@ const Home = () => {
         }
     },[location])
 
-    const requestDelete = (exercise, category) => {
-        setExerciseToDelete({...exercise, category})
+    const requestDelete = (exerciseID) => {
+        setExerciseToDelete(exerciseID)
     } 
 
-    const deleteExercise = async(id, category) => {
+    const deleteExercise = async(id) => {
 
-        const { error } = supabase
+        const { error } = await supabase
+                          .from("user_exercises")
                           .delete()
                           .eq("id", id)
-        setExerciseData({
-            ...exerciseData,
-            [category]: updatedList
-        })
+                          .eq("user_id", user.id)
+
+          if (error) {
+                console.error("Query Error:", error.message)
+                return
+            }
+        setExerciseData((prevData) => {
+            const newData = {...prevData}
+
+            for( const category in newData ){
+                newData[category] = newData[category].filter((exe) => (exe.id !== id))
+            }
+
+        return newData;
+    })
+                          
         setShowDeleteToast(true)
         setTimeout(() => setShowDeleteToast(false), 15000)
         setExerciseToDelete(null)
@@ -145,14 +158,15 @@ const Home = () => {
                 {exerciseToDelete && (
                     <ConfirmDelete 
                         exercise = {exerciseToDelete}
-                        onDelete = { () => deleteExercise(exerciseToDelete.id, exerciseToDelete.category)}
+                        onDelete = { () => deleteExercise(exerciseToDelete.id)}
                         onCancel = { () => setExerciseToDelete(null)}
                     />
                 )}
                 {(addExerciseButton && user) && (
                         <AddExerciseFromDatabase 
                             exerciseCategory={exerciseCategory} 
-                            toast={setAddExerciseToast} userData={user} 
+                            toast={setAddExerciseToast} 
+                            userData={user} 
                             onExerciseAdded={onExerciseAdded}
                             onClose={() => setAddExerciseButton(false)}
                         />

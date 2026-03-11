@@ -2,7 +2,8 @@ import ExerciseCard from "./ExerciseCard"
 import { CirclePlus } from "lucide-react"
 
 
-function ExerciseRow({ title, exercises, requestDelete, setAddExercise: setAddExerciseButton, setExerciseCategory}) {
+function ExerciseRow({ title, exercises, requestDelete, 
+                        setAddExercise: setAddExerciseButton, setExerciseCategory}) {
 
     return (
         <section className="mb-2">
