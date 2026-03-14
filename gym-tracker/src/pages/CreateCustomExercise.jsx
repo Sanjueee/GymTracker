@@ -1,115 +1,131 @@
-import React, { useState } from 'react';
-import { ChevronDown, Image as ImageIcon, X, Plus, Dumbbell, Info } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Search, Image as ImageIcon, X, Plus, Dumbbell, ChevronDown } from 'lucide-react';
 
 const CreateCustomExercise = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    mainMuscle: '',
-    secondaryMuscles: '',
-    equipment: '',
-    instructions: '',
-  });
+  const [exerciseName, setExerciseName] = useState('');
+  const [mainMuscle, setMainMuscle] = useState('');
+  const [secondaryMuscles, setSecondaryMuscles] = useState([]);
+  const [muscleSearch, setMuscleSearch] = useState('');
+  const [showMuscleList, setShowMuscleList] = useState(false);
 
-  const muscleGroups = ["Chest", "Back", "Legs", "Shoulders", "Arms", "Core", "Full Body"];
+  const allMuscles = [
+    "Abductors", "Adductors", "Biceps", "Calves", "Chest", "Forearms", 
+    "Glutes", "Hamstrings", "Lats", "Lower Back", "Middle Back", 
+    "Quadriceps", "Quads", "Rear Delts", "Shoulders", "Traps", "Triceps"
+  ];
+
+  const filteredMuscles = allMuscles.filter(m => 
+    m.toLowerCase().includes(muscleSearch.toLowerCase())
+  );
+
+  const toggleSecondaryMuscle = (muscle) => {
+    setSecondaryMuscles(prev => 
+      prev.includes(muscle) ? prev.filter(m => m !== muscle) : [...prev, muscle]
+    );
+  };
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100 p-6 font-outfit">
-      <div className="max-w-2xl mx-auto">
-        {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold font-inter tracking-tight">Create <span className="text-accent">Custom</span></h1>
-          <p className="text-zinc-500 mt-2">Add a unique movement to your personal database.</p>
-        </div>
+    <div className="min-h-screen bg-black text-zinc-100 p-4 font-inter">
+      <div className="max-w-xl mx-auto space-y-8">
+        
+        <header>
+          <h1 className="text-2xl font-bold">New <span className="text-accent">Exercise</span></h1>
+          <p className="text-zinc-500 text-sm">Define your custom movement details.</p>
+        </header>
 
-        <div className="space-y-6 bg-zinc-900/50 p-8 rounded-3xl border border-zinc-800 shadow-xl">
-          
+        <div className="space-y-6">
           {/* Exercise Name */}
           <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-400 ml-1">Exercise Name</label>
+            <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Name</label>
             <input 
               type="text"
-              placeholder="e.g. Weighted Pullups"
-              className="w-full bg-zinc-800/50 border border-zinc-700 rounded-2xl py-3 px-4 outline-none focus:border-accent/50 
-                        focus:ring-1 focus:ring-accent/20 transition-all"
+              placeholder="e.g. Archer Pushups"
+              className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-4 outline-none focus:border-accent/50 transition-all"
             />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Main Muscle Dropdown */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-zinc-400 ml-1">Main Muscle</label>
-              <div className="relative">
-                <select className="w-full bg-zinc-800/50 border border-zinc-700 rounded-2xl py-3 px-4 appearance-none outline-none 
-                                focus:border-accent/50 transition-all cursor-pointer">
-                  <option value="" disabled selected>Select Muscle</option>
-                  {muscleGroups.map(muscle => (
-                    <option key={muscle} value={muscle.toLowerCase()}>{muscle}</option>
-                  ))}
-                </select>
-                <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-zinc-500 pointer-events-none" />
-              </div>
+          {/* Main Muscle - Searchable Input */}
+          <div className="space-y-2 relative">
+            <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Main Muscle Group</label>
+            <div className="relative">
+              <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" />
+              <input 
+                type="text"
+                value={mainMuscle || muscleSearch}
+                onChange={(e) => {
+                    setMuscleSearch(e.target.value);
+                    setMainMuscle('');
+                    setShowMuscleList(true);
+                }}
+                onFocus={() => setShowMuscleList(true)}
+                placeholder="Search muscle group..."
+                className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 pl-12 pr-4 outline-none focus:border-accent/50 transition-all"
+              />
             </div>
-
-            {/* Equipment */}
-            <div className="space-y-2">
-              <label className="text-sm font-medium text-zinc-400 ml-1">Equipment</label>
-              <div className="relative">
-                <Dumbbell size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" />
-                <input 
-                  type="text"
-                  placeholder="e.g. Barbell"
-                  className="w-full bg-zinc-800/50 border border-zinc-700 rounded-2xl py-3 pl-12 pr-4 outline-none 
-                            focus:border-accent/50 transition-all"
-                />
+            
+            {showMuscleList && (
+              <div className="absolute top-full left-0 w-full mt-2 bg-zinc-900 border border-zinc-800 rounded-2xl shadow-2xl z-50 max-h-48 overflow-y-auto p-2 custom-scrollbar">
+                {filteredMuscles.map(m => (
+                  <button 
+                    key={m}
+                    onClick={() => {
+                      setMainMuscle(m);
+                      setMuscleSearch('');
+                      setShowMuscleList(false);
+                    }}
+                    className="w-full text-left px-4 py-3 hover:bg-zinc-800 rounded-xl transition-colors text-sm"
+                  >
+                    {m}
+                  </button>
+                ))}
               </div>
-            </div>
+            )}
           </div>
 
-          {/* Secondary Muscles */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-400 ml-1">Secondary Muscles (Optional)</label>
-            <input 
-              type="text"
-              placeholder="e.g. Forearms, Biceps"
-              className="w-full bg-zinc-800/50 border border-zinc-700 rounded-2xl py-3 px-4 outline-none 
-                            focus:border-accent/50 transition-all"
-            />
-          </div>
-
-          {/* Instructions */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-400 ml-1">Instructions</label>
-            <textarea 
-              rows="4"
-              placeholder="How do you perform this exercise?"
-              className="w-full bg-zinc-800/50 border border-zinc-700 rounded-2xl py-3 px-4 outline-none 
-                            focus:border-accent/50 transition-all resize-none"
-            ></textarea>
-          </div>
-
-          {/* Image Upload Area */}
-          <div className="space-y-2">
-            <label className="text-sm font-medium text-zinc-400 ml-1">Exercise Images</label>
-            <div className="border-2 border-dashed border-zinc-700 rounded-2xl p-8 flex flex-col items-center 
-                            justify-center hover:border-accent/30 hover:bg-accent/5 transition-all cursor-pointer group">
-              <div className="bg-zinc-800 p-3 rounded-full group-hover:scale-110 transition-transform">
-                <ImageIcon className="text-zinc-400 group-hover:text-accent" />
-              </div>
-              <p className="mt-3 text-sm text-zinc-400">Click to upload or drag and drop</p>
-              <p className="text-xs text-zinc-600 mt-1">PNG, JPG or GIF (max. 2MB)</p>
+          {/* Secondary Muscles - Multi-select Tags */}
+          <div className="space-y-3">
+            <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Secondary Muscles</label>
+            <div className="flex flex-wrap gap-2 p-1">
+              {["Triceps", "Abs", "Core", "Traps", "Forearms"].map(m => (
+                <button
+                  key={m}
+                  onClick={() => toggleSecondaryMuscle(m)}
+                  className={`px-4 py-2 rounded-full text-xs font-medium border transition-all ${
+                    secondaryMuscles.includes(m)
+                      ? "bg-accent text-black border-accent"
+                      : "bg-transparent border-zinc-800 text-zinc-500 hover:border-zinc-600"
+                  }`}
+                >
+                  {m}
+                </button>
+              ))}
+              <button className="px-4 py-2 rounded-full text-xs font-medium border border-dashed border-zinc-700 text-zinc-500 flex items-center gap-1">
+                <Plus size={14} /> More
+              </button>
             </div>
           </div>
 
-          {/* Action Buttons */}
-          <div className="pt-4 flex gap-4">
-            <button className="flex-1 bg-zinc-800 hover:bg-zinc-700 text-white font-bold py-4 rounded-2xl transition-all active:scale-[0.98]">
-              Cancel
-            </button>
-            <button className="flex-2 bg-accent/60 text-zinc-200  font-bold py-4 rounded-2xl shadow-lg shadow-accent/20 
-                                hover:opacity-90 transition-all active:scale-[0.98]">
-              Create Exercise
-            </button>
+          {/* Equipment & Instructions (Simplified for this view) */}
+          <div className="grid grid-cols-2 gap-4">
+             <div className="space-y-2">
+                <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Equipment</label>
+                <input type="text" placeholder="Barbell" className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-3 px-4 outline-none text-sm"/>
+             </div>
+             <div className="space-y-2">
+                <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Category</label>
+                <input type="text" placeholder="Strength" className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-3 px-4 outline-none text-sm"/>
+             </div>
           </div>
+
+          <div className="space-y-2">
+            <label className="text-xs font-bold text-zinc-500 uppercase tracking-widest ml-1">Instructions</label>
+            <textarea rows="3" className="w-full bg-zinc-900 border border-zinc-800 rounded-2xl py-4 px-4 outline-none focus:border-accent/50 resize-none text-sm"></textarea>
+          </div>
+
+          {/* Action */}
+          <button className="w-full bg-accent text-black font-bold py-4 rounded-2xl shadow-lg shadow-accent/10 hover:opacity-90 active:scale-[0.99] transition-all">
+            Save Exercise
+          </button>
         </div>
       </div>
     </div>
